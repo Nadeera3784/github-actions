@@ -34,9 +34,6 @@ jobs:
       run: node-prune
     - name: Cleanup node_modules
       run: modclean -n default:safe,default:caution -
-    - uses: montudor/action-zip@v1
-      with:
-        args: zip -qq -r dist.zip dist
     - name: List files in the repository
       run: |
         ls ${{ github.workspace }}
@@ -46,18 +43,8 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         known_hosts: unnecessary
     - name: Adding Known Hosts
-      run: ssh-keyscan -p 22 -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
+      run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
     - run: echo "Adding Known Hosts success"
     - name: Deploy with rsync
       #run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/ubuntu/distbackup/
-      run : rsync -avz dist.zip ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/api/
-
-    - name: Restart Node Server
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          cd /var/ubuntu/api/
-          mv /var/ubuntu/api/dist.zip /home/api
+      run : rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/api/

@@ -1,7 +1,11 @@
 const fastify = require('fastify')({ logger: true })
 
-fastify.get('/', async (request, reply) => {
+fastify
+.get('/', async (request, reply) => {
   return { name: 'john doe' }
+})
+.get('/users', async (request, reply) => {
+    return { id: 2 }
 })
 
 const start = async () => {
