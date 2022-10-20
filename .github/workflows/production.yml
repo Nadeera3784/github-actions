@@ -34,12 +34,12 @@ jobs:
       run: node-prune
     - name: Cleanup node_modules
       run: modclean -n default:safe,default:caution -
-    - uses: montudor/action-zip@v1
-      with:
-        args: zip -qq -r dist.zip dist
-    - name: List files in the repository
-      run: |
-        ls ${{ github.workspace }}
+    # - uses: montudor/action-zip@v1
+    #   with:
+    #     args: zip -qq -r dist.zip dist
+    # - name: List files in the repository
+    #   run: |
+    #     ls ${{ github.workspace }}
     - name: Install SSH Key
       uses: shimataro/ssh-key-action@v2
       with:
@@ -50,14 +50,13 @@ jobs:
     - run: echo "Adding Known Hosts success"
     - name: Deploy with rsync
       #run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/ubuntu/distbackup/
-      run : rsync -avz dist.zip ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/ubuntu/
+      run : rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/api/
 
-    - name: Restart Node Server
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          cd /home/ubuntu/
-          mv /home/ubuntu/dist.zip /var/www/api
+    # - name: Restart Node Server
+    #   uses: appleboy/ssh-action@master
+    #   with:
+    #     host: ${{ secrets.SSH_HOST }}
+    #     username: ${{ secrets.SSH_USER }}
+    #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+    #     script: |
+    #       cd /home/ubuntu/
