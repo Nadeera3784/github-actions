@@ -52,11 +52,12 @@ jobs:
       #run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/ubuntu/distbackup/
       run : rsync -avz dist.zip ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/api/
 
-    # - name: Restart Node Server
-    #   uses: appleboy/ssh-action@master
-    #   with:
-    #     host: ${{ secrets.SSH_HOST }}
-    #     username: ${{ secrets.SSH_USER }}
-    #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-    #     script: |
-    #       cd /home/ubuntu/
+    - name: Restart Node Server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          cd /var/ubuntu/api/
+          mv /var/ubuntu/api/dist.zip /home/api
