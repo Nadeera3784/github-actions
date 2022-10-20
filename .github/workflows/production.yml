@@ -34,6 +34,15 @@ jobs:
       run: node-prune
     - name: Cleanup node_modules
       run: modclean -n default:safe,default:caution -
+
+    - uses: montudor/action-zip@v1
+      with:
+        args: zip -qq -r dist.zip dist
+
+    - name: List files in the repository
+      run: |
+        ls ${{ github.workspace }}
+
     - name: Install SSH Key
       uses: shimataro/ssh-key-action@v2
       with:
@@ -44,4 +53,4 @@ jobs:
     - run: echo "Adding Known Hosts success"
     - name: Deploy with rsync
       #run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/ubuntu/distbackup/
-      run : rsync -a -v -z -e "ssh -c aes192-ctr -o Compression=no -x" ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/ubuntu/
+      run : rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/ubuntu/
