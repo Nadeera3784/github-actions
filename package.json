@@ -1,0 +1,27 @@
+{
+  "name": "github-actions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nadeera3784/github-actions.git"
+  },
+  "keywords": [
+    "github",
+    "action",
+    "learing"
+  ],
+  "author": "nadeera",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Nadeera3784/github-actions/issues"
+  },
+  "homepage": "https://github.com/Nadeera3784/github-actions#readme",
+  "dependencies": {
+    "fastify": "^4.9.2"
+  }
+}
