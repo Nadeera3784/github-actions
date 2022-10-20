@@ -47,4 +47,4 @@ jobs:
     - run: echo "Adding Known Hosts success"
     - name: Deploy with rsync
       #run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/ubuntu/distbackup/
-      run : rsync -avz --no-t ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/api/
+      run : rsync -avztcq --delete --progress ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/api/
