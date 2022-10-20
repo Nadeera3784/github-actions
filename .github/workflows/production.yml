@@ -60,4 +60,4 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           cd /home/ubuntu/
-          mv /home/ubuntu/dist.zip /var/www/
+          mv /home/ubuntu/dist.zip /var/www/api
