@@ -27,7 +27,7 @@ jobs:
         node-version: 14.x
         cache: 'npm'
     - name: Install dependencies
-        run: npm install
+      run: npm install
     - run: echo "npm install success"
     - name: Deploy to stage
       uses: appleboy/ssh-action@master
