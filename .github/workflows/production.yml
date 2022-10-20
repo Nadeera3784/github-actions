@@ -50,7 +50,7 @@ jobs:
     - run: echo "Adding Known Hosts success"
     - name: Deploy with rsync
       #run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/ubuntu/distbackup/
-      run : rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/api/
+      run : rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/api
 
     # - name: Restart Node Server
     #   uses: appleboy/ssh-action@master
