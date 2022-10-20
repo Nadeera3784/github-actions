@@ -35,11 +35,23 @@ jobs:
     - name: Cleanup node_modules
       run: modclean -n default:safe,default:caution -
 
-    - name: Deploy to production
-      uses: appleboy/ssh-action@master
+    - name: Install SSH Key
+      uses: shimataro/ssh-key-action@v2
       with:
-        host: ec2-13-126-219-249.ap-south-1.compute.amazonaws.com
-        username: ubuntu 
         key: ${{ secrets.SSH_PRIVATE_KEY }}
-        source: "dist"
-        target: "/var/www/api"
+        known_hosts: unnecessary
+    - name: Adding Known Hosts
+      run: ssh-keyscan -p 22 -H ec2-13-126-219-249.ap-south-1.compute.amazonaws.com  >> ~/.ssh/known_hosts
+    - run: echo "Adding Known Hosts success"
+    - name: Deploy with rsync
+      run: rsync -avz ./dist/ ubuntu@ec2-13-126-219-249.ap-south-1.compute.amazonaws.com:/var/www/api/s
+
+    # - name: Deploy to production
+    #   uses: appleboy/ssh-action@master
+    #   with:
+    #     host: ec2-13-126-219-249.ap-south-1.compute.amazonaws.com
+    #     username: ubuntu 
+    #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+    #     source: "dist"
+    #     target: "/var/www/api"
+        #script:
