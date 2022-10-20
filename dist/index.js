@@ -1,5 +1,17 @@
-GitHub offers free and paid products for storing and collaborating on code. Some products apply only 
+const fastify = require('fastify')({ logger: true })
 
-You can see pricing and a full list of features for each product 
+fastify.get('/', async (request, reply) => {
+  return { hello: 'world' }
+})
 
-With GitHub Free for personal accounts, you can work with unlimited collaborators on unlimited 
+
+const start = async () => {
+  try {
+    await fastify.listen({ port: 3000 })
+  } catch (err) {
+    fastify.log.error(err)
+    process.exit(1)
+  }
+}
+
+start()
