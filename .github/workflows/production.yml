@@ -13,27 +13,27 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [14.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
+    - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+    - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+    - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+    - name: Check out repository code
+      uses: actions/checkout@v3
+    - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+    - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+    - name: Use Node.js 14.x
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 14.x
         cache: 'npm'
-    #- run: npm ci
-    #- run: npm run build --if-present
-    #- run: npm test
-
+    - name: Install dependencies
+        run: npm install
+    - run: echo "npm install success"
     - name: Deploy to stage
       uses: appleboy/ssh-action@master
       with:
         host: ec2-13-126-219-249.ap-south-1.compute.amazonaws.com
         username: ubuntu 
         key: ${{ secrets.SSH_PRIVATE_KEY }}
-        source: "dist"
+        source: ".,!node_modules"
         target: "/var/www/api"
