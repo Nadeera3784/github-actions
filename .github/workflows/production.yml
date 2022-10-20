@@ -44,4 +44,4 @@ jobs:
     - run: echo "Adding Known Hosts success"
     - name: Deploy with rsync
       #run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/ubuntu/distbackup/
-      run : rsync -a -v -z -e "ssh -c arcfour -o Compression=no -x" ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/ubuntu/
+      run : rsync -a -v -z -e "ssh -c 3des-cbc -o Compression=no -x" ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/ubuntu/
